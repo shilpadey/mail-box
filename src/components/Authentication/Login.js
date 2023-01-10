@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { login } from "../../store/auth-actions";
+import { authActions } from "../../store/auth";
 import classes from './SignUp.module.css';
 
 const Login = () => {
@@ -10,16 +10,45 @@ const Login = () => {
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
 
-    const formSubmitHandler = (event) => {
+    const formSubmitHandler = async(event) => {
         event.preventDefault();
 
         const enteredEmail = emailInputRef.current.value;
         const enteredPassword = passwordInputRef.current.value;
 
-        dispatch(login(enteredEmail, enteredPassword));
-        emailInputRef.current.value = "";
-        passwordInputRef.current.value = "";
-        history.replace('/home');
+        try{
+            const response = await fetch(
+                "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBo2nLTGOdM4YGTS68TUWZn1dYkSLrBhfY",
+                {
+                  method: "POST",
+                  body: JSON.stringify({
+                    email: enteredEmail,
+                    password: enteredPassword,
+                    returnSecureToken: true,
+                  }),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+            );
+    
+            if(response.ok){
+                const data = await response.json();
+                localStorage.setItem("userID", data.localId);
+                localStorage.setItem("email", data.email);
+                dispatch(authActions.login(data.idToken));
+                emailInputRef.current.value = "";
+                passwordInputRef.current.value = "";
+                history.replace('/home');
+            }else{
+                const data = await response.json();
+                alert(data.error.message);
+                emailInputRef.current.value = null;
+                passwordInputRef.current.value = null;
+            }
+        }catch(error){
+            console.log(error);
+        }
     };
 
     const buttonRedirect = () => {
@@ -30,7 +59,7 @@ const Login = () => {
         <section>
             <div className={classes.form}>
                 <form onSubmit={formSubmitHandler}>
-                    <h1>Sign Up</h1>
+                    <h1>LogIn</h1>
                     <div className={classes.control}>
                         <input 
                             htmlFor="email" 
