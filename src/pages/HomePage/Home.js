@@ -1,10 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
+import classes from "./Home.module.css";
 
 const Home = () => {
     return (
-        <Fragment>
+        <div className={classes.home}>
             Welcome to the mail box
-        </Fragment>
+        </div>
     );
 };
 

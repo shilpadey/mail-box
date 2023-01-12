@@ -1,0 +1,75 @@
+.compose {
+    position: absolute;
+    right: 50px;
+    bottom: 0px;
+    background-color: rgb(251, 250, 252);
+    width: 50%;
+    height: 490px;
+    max-width: 65rem;
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid whitesmoke;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(172, 216, 255);
+}
+
+.header button {
+    width: 2.2rem;
+    background-color: transparent;
+    border: none;
+    height: 2.1rem;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.compose input {
+    height: 3rem;
+    border: none;
+    border-bottom: 1px solid gray;
+    padding: 8px;
+    width: 98%;
+}
+  
+.compose input::placeholder {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.editor {
+    background-color: white;
+    text-align: left;
+}
+.editor label {
+    color: gray;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.actions button{
+    width: 7rem;
+    background-color: rgb(35, 115, 253);
+    border: none;
+    height: 2.5rem;
+    border-radius: 100px;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.actions button:hover {
+    background-color: rgb(76, 185, 253);
+    cursor: pointer;
+  }
+  
+
+  

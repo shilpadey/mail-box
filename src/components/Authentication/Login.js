@@ -34,6 +34,7 @@ const Login = () => {
     
             if(response.ok){
                 const data = await response.json();
+                localStorage.setItem("idToken", data.idToken);
                 localStorage.setItem("userID", data.localId);
                 localStorage.setItem("email", data.email);
                 dispatch(authActions.login(data.idToken));
