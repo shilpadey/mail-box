@@ -1,78 +1,49 @@
+.main-form {
+  width: 600px;
+  margin: auto;
+  margin-top: 170px;
+  box-sizing: border-box;
+}
+
 .form {
-    margin: 3rem auto;
-    width: 95%;
-    max-width: 25rem;
-    border-radius: 6px;
-    background-color: #ffffff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    text-align: center;
-    color: white;
-  }
-
-  .form h1 {
-    text-align: center;
-    color: rgb(3, 3, 3);
-  }
-
-  .control {
-    margin-bottom: 0.5rem;
-  }
-
-  .control input {
-    font: inherit;
-    background-color: white;
-    border-radius: 4px;
-    border-color: transparent;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    width: 95%;
-    text-align: left;
-    padding: 0.25rem;
-  }
-
-  .control input:hover,
-  .control input:active,
-  .control input:focus{
-    background-color: rgb(203, 234, 255);
-   }
-
-  .actions {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .actions button {
-    cursor: pointer;
-    font: inherit;
-    color: white;
-    background-color: #688cf9;
-    border: 1px solid #75a0fe;
-    border-radius: 50px;
-    padding: 0.5rem 5rem;
-  }
-
-  .actions button:hover {
-    background-color: #4f55f8;
-    border-color: #6278f8;
-  }
-
-  .login button{
-    position: relative;
-    background-color: rgb(223, 252, 242);
-    border: 1px solid rgb(215, 215, 215);
-    text-align: center;
-    left: 37.44%;
-    width: 25%;
-    margin: 12px auto;
-    border-radius: 5px;
-    padding: 10px;
-    transition: background-color 1s;
+  border: 2px solid black;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px black;
 }
 
-
-.login button:hover,
-.login button:focus{
-    background-color: rgb(125, 174, 157);
+.form .title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: bold;
 }
+
+.form input {
+  display: block;
+  box-sizing: border-box;
+  padding: 10px 0 10px 5px;
+  margin: 15px 0 15px 0;
+  width: 100%;
+}
+
+.button button{
+  text-align: center;
+  width: 60%;
+  padding: 8px 0 8px 0;
+  border-radius: 25px;
+  font-size: 18px;
+}
+
+.button button:hover{
+  background: rgb(123, 249, 213);
+}
+
+.hasAccount {
+  margin: auto;
+  margin-top: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  border-bottom: 2px solid purple;
+  width: fit-content;
+} 

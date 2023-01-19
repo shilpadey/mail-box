@@ -1,0 +1,44 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+  }
+  
+  .compose_btn {
+    width: 10rem;
+    height: 3rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    background-color:  rgb(126, 207, 251);
+    margin-bottom: 10px;
+    margin-left: 2rem;
+  }
+  
+  .compose_btn:hover {
+    background-color: rgb(72, 173, 246);
+    box-shadow: 2px 2px 3px black;
+    cursor: pointer;
+  }
+  .compose_btn svg {
+    padding-left: 10px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 15px;
+    margin-top: 20px;
+  }
+  
+  .sidebar li {
+    margin: 0 1rem;
+    padding: 10px;
+  }
+  .sidebar a {
+    text-decoration: none;
+    color: rgb(65, 37, 92);
+    font-weight: bold;
+    font-size: 20px;
+  }
+  

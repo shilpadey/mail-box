@@ -1,69 +1,81 @@
-import axios from "axios";
-import React, { useRef, useState } from "react";
-import TextEditor from "./Editor";
+import React, { useRef } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch } from "react-redux";
-import { composeActions } from "../../store/compose";
+import { addMail } from "../../store/inbox-actions";
+import { Container, Button, Card, Form } from "react-bootstrap";
 import classes from "./ComposeMail.module.css";
 
 const ComposeMail = () => {
     const dispatch = useDispatch();
     const emailRef = useRef();
     const subjectRef = useRef();
-    const [ message , setMessage ] = useState("");
+    let body;
+    
+    const handleEditorChange = (event) => {
+        body = event.getCurrentContent().getPlainText();
+    };
 
-    const submitHandler = async(event) => {
+    const clearInputFields = () => {
+        emailRef.current.value = "";
+        subjectRef.current.value = "";
+        body = null;
+    };
+
+    const submitComposeHandler = (event) => {
         event.preventDefault();
 
-        const enteredEmail = emailRef.current.value;
-        const senderEmail = localStorage.getItem('email');
-        const receiver = enteredEmail.substring(0, enteredEmail.lastIndexOf('@'));
-        const sender = senderEmail.substring(0, senderEmail.lastIndexOf('@'));
-
-        const composeData = {
-            sender,
-            receiver,
-            email: senderEmail,
-            subject: subjectRef.current.value,
-            body: message,
+        const mailData = {
+            from: JSON.parse(localStorage.getItem("idToken")).email,
+            to: emailRef.current.value,
+            title: subjectRef.current.value,
+            text: body,
         };
-
-        try{
-            const response = await axios.post(`https://mail-box-fca66-default-rtdb.firebaseio.com/${receiver}/receive.json`, composeData);
-            if(response.statusText === "OK"){
-                alert('Sent mail Successfully');
-                dispatch(composeActions.editorIsClose());
-            }else{
-                throw new Error('Sending mail failed');
-            }
-        }catch(error){
-            alert(error);
-        }
-    };
-
-    const closeHandler = () => {
-        dispatch(composeActions.editorIsClose());
-    };
+        
+        dispatch(addMail(mailData, clearInputFields));
+    }; 
 
     return (
-        <section className={classes.compose}>
-            <div className={classes.header}>
-                <h3>New Message</h3>
-                <button onClick={closeHandler}>x</button>
-            </div>
-            <form onSubmit={submitHandler}>
-                <div>
-                    <input type="email" placeholder="To" ref={emailRef} required/>
-                    <input type="text" placeholder="Subject" ref={subjectRef} required/>
-                </div>
-                <div className={classes.editor}>
-                    <label>Enter Message</label>
-                    <TextEditor setMessage={setMessage}/>
-                </div>
-                <div className={classes.actions}>
-                    <button>Send</button>
-                </div>
-            </form>
-        </section>
+        <>
+            <Container className={classes.compose}>
+                <Card
+                    style={{ margin: "65px 77px", width: "80%", height: "60%" }}
+                >
+                    <Card.Header className="bg-secondary">
+                        <Form>
+                        <input
+                            placeholder="To"
+                            ref={emailRef}
+                            style={{ width: "100%", marginBottom: "10px" }}
+                        ></input>
+                        <input
+                            placeholder="Subject"
+                            ref={subjectRef}
+                            style={{ width: "100%", marginBottom: "10px" }}
+                        ></input>
+                        </Form>
+                    </Card.Header>
+                    <Card.Body>
+                        <Editor
+                            onEditorStateChange={handleEditorChange}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                        ></Editor>
+                    </Card.Body>
+                    <Card.Footer className=" bg-secondary">
+                        <Button
+                            variant="danger"
+                            style={{ cursor: "pointer" }}
+                            type="submit"
+                            onClick={submitComposeHandler}
+                        >
+                            Send
+                        </Button>
+                    </Card.Footer>
+                </Card>
+            </Container>
+        </>
     );
 };
 

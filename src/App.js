@@ -1,33 +1,31 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './components/Authentication/Login';
-import SignUp from './components/Authentication/SignUp';
-import ComposeMail from './components/ComposeMail/ComposeMail';
-import Navbar from './components/Layout/Navbar';
-import Home from './pages/HomePage/Home';
+import Layout from './components/Layout/Layout';
+import Home from "./pages/HomePage/Home";
+
 
 function App() {
-  const isAuth = useSelector(state => state.auth.isAuthenticated);
-  const composeMail = useSelector(state => state.compose.editorState);
+  const isAuth = useSelector((state) => state.auth.isLoggedIn);
   
   return (
-    <BrowserRouter>
-      {isAuth && <Navbar />}
+    <Fragment>
+      <Layout>
       <Switch>
+        <Route path="/" exact>
+          {isAuth ? <Redirect to="/home"/> : <Redirect to="/login" />}
+        </Route>
         <Route path="/home">
-          <Home />
+          {isAuth ? <Home /> : <Redirect to="/login"/>}
         </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="/">
+        <Route path="/login">
           <Login />
         </Route>
-      </Switch>
-      <div>{composeMail && <ComposeMail />}</div>
-    </BrowserRouter>
+      </Switch> 
+      </Layout>
+    </Fragment>
   );
 }
 
