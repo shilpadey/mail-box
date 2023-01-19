@@ -4,7 +4,7 @@ import ComposeMail from "../../components/ComposeMail/ComposeMail";
 import Inbox from "../../components/Inbox/Inbox";
 import Sidebar from "../../components/Layout/Sidebar";
 import classes from "./Home.module.css";
-import { emailFetch, updateMail } from "../../store/inbox-actions";
+import { emailFetch,  updateMail } from "../../store/inbox-actions";
 import Sent from "../../components/Inbox/Sent";
 
 const Home = () => {

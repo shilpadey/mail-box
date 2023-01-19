@@ -1,22 +1,23 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ListGroup, Badge } from "react-bootstrap";
-import { deleteMail, emailFetch } from "../../store/inbox-actions";
+import { deleteMail, updateMail } from "../../store/inbox-actions";
 import classes from "./MailData.module.css";
 
 const MailData = (props) => {
     const dispatch = useDispatch();
     const loggedUserEmail = JSON.parse(localStorage.getItem("idToken")).email;
     const emailUrl = loggedUserEmail.replace("@", "").replace(".","");
+    const currentMailData = useSelector(state => state.inbox.mailData);
     const [ showBody, setShowBody ] = useState(false);
     let x;
-    if (props.mail.read && props.toOrFrom === "From : ") {
-      x = "seen";
-    } else if (!props.mail.read) {
-      x = "unseen";
-    } else if (props.toOrFrom === "To : ") {
+    if (props.toOrFrom === "To : ") {
       x = "sent";
-    }
+    }else if (props.mail.read && props.toOrFrom === "From : ") {
+      x = "seen";
+    } else if( !props.mail.read ) {
+      x = "unseen";
+    };
     
       // checking if mail is read or not
     const readMailHandler = async () => {
@@ -40,7 +41,7 @@ const MailData = (props) => {
             if (!response.ok) {
               throw data.error;
             } else {
-              dispatch(emailFetch(emailUrl, loggedUserEmail));
+              dispatch(updateMail(emailUrl, loggedUserEmail,currentMailData));
             }
           } catch (error) {
             console.log(error.message);
